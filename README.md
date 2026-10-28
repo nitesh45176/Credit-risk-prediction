@@ -253,7 +253,7 @@ For a manually configured Render web service, use:
 
 In particular, do not use `uvicorn backend.app.main:app`: this repository has `main.py` at its root, not a `backend` package. If a service already exists, update its Start Command in Render's service settings (or sync the Blueprint), then deploy the latest commit. The model files `credit_risk_model.pkl` and `best_threshold.pkl` and the `static/` directory must be committed to the repository.
 
-Python is pinned to 3.12.11 in both `.python-version` and `runtime.txt` so Render uses the same runtime consistently.
+Vercel uses `.python-version` set to the supported Python 3.12 runtime. Render uses `runtime.txt` set to Python 3.12.11.
 
 ## Explainability with SHAP
 

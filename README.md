@@ -255,6 +255,8 @@ In particular, do not use `uvicorn backend.app.main:app`: this repository has `m
 
 Vercel uses `.python-version` set to the supported Python 3.12 runtime. Render uses `runtime.txt` set to Python 3.12.11.
 
+The app only performs CPU inference, so `requirements.txt` uses the CPU-only XGBoost distribution. This avoids bundling GPU/NCCL libraries that are not needed by the app and helps keep the Vercel function below its size limit.
+
 ## Explainability with SHAP
 
 SHAP (SHapley Additive exPlanations) is a method for understanding how input features contribute to a machine-learning prediction. It can be used to study overall feature importance and explain individual predictions.

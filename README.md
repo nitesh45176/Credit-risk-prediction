@@ -243,15 +243,17 @@ Run the notebook cells in order. Review the notebook for its exact data preparat
 
 ## Deployment
 
-The repository contains a `render.yaml` file for Render deployment. Review that configuration before deploying and verify that:
+The repository includes a Render Blueprint in `render.yaml`. The service must use the repository root as its root directory, since `main.py`, the model files, and `static/` are located there.
 
-- The configured build/install command installs `requirements.txt`.
-- The start command runs the FastAPI application using the correct module path.
-- The model artifacts are included in the deployment environment.
-- Any required frontend assets are present.
-- The deployed service can load the model and threshold at startup.
+For a manually configured Render web service, use:
 
-Do not assume that a deployment is active merely because a deployment configuration file exists.
+- **Root Directory:** leave blank (repository root)
+- **Build Command:** `pip install -r requirements.txt`
+- **Start Command:** `uvicorn main:app --host 0.0.0.0 --port $PORT`
+
+In particular, do not use `uvicorn backend.app.main:app`: this repository has `main.py` at its root, not a `backend` package. If a service already exists, update its Start Command in Render's service settings (or sync the Blueprint), then deploy the latest commit. The model files `credit_risk_model.pkl` and `best_threshold.pkl` and the `static/` directory must be committed to the repository.
+
+Python is pinned to 3.12.11 in both `.python-version` and `runtime.txt` so Render uses the same runtime consistently.
 
 ## Explainability with SHAP
 
